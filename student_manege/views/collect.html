@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <style>
+        *{
+            padding:0;
+            margin:0
+        }
+        
+        html,body {
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+</head>
+<body>
+    hello
+    <script>
+
+        var obj = {
+            bodyWidth:$('body').width(),
+            bodyHeight:$('body').height(),
+            screenWidth:screen.width,
+            screenHeight:screen.height,
+            devicePixelRatio:window["devicePixelRatio"],
+            userAgent:navigator.userAgent,
+            time:new Date
+        };
+
+        var url = '/collect/collection';
+        var isSend = null;
+        try{
+            isSend = localStorage.getItem('isSend')
+        }catch(e){
+
+        }
+        if(!isSend){
+            $.post( url,obj,function(data){
+                if(data.code===1){
+                    localStorage.setItem('isSend',1111);
+                }
+            })
+        }
+    </script>
+</body>
+</html>
