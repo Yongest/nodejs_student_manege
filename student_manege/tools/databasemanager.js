@@ -32,7 +32,7 @@ function getDB(callBack){
 exports.findOne = (collectionName,condition,callback)=>{
     getDB(function (db,client) {
         //console.log(db)
-        db.collection(collectionName).findOne(condition,(err,doc)=>{
+        db.collection(collectionName).findOne(condition ,(err,doc)=>{
             client.close();
 
             //通过回调，把数据库中的数据传给控制器去处理

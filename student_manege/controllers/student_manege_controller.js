@@ -14,7 +14,7 @@ exports.studentManegeCtr = (req, res)=> {
     const keyword = req.query.keyword || '';
 
 
-    databasemanager.findList('studentlist', {name: {$regex: keyword}}, function (err, docs) {
+    databasemanager.findList('student', {name: {$regex: keyword}}, function (err, docs) {
         xtpl.renderFile(path.join(__dirname, '../views/student_list.html'), {
             studentlist: docs,
             keyword: keyword,
@@ -63,7 +63,7 @@ exports.getAddPage = (req, res)=> {
 
 
 exports.addStudent = (req, res)=> {
-    databasemanager.addOne('studentlist', req.body, (err, doc)=> {
+    databasemanager.addOne('student', req.body, (err, doc)=> {
         res.setHeader('Content-Type', 'text/html;charset=utf8')
         if (doc === null) {
             res.end('<script>alert("添加失败")</script>script>')
@@ -75,7 +75,7 @@ exports.addStudent = (req, res)=> {
 
 exports.getEditPage = (req, res)=> {
     var studentId = req.params.studentId
-    databasemanager.findOne('studentlist', {_id: databasemanager.ObjectId(studentId)}, (err, doc)=> {
+    databasemanager.findOne('student', {_id: databasemanager.ObjectId(studentId)}, (err, doc)=> {
 
         xtpl.renderFile(path.join(__dirname, '../views/edit.html'), {student: doc,loginedname:req.session.loginname}, (err, content)=> {
 
@@ -87,7 +87,7 @@ exports.getEditPage = (req, res)=> {
 
 exports.editStudent = (req, res)=> {
     var studentId = req.params.studentId
-    databasemanager.updateOne('studentlist', {_id: databasemanager.ObjectId(studentId)}, req.body, (err, doc)=> {
+    databasemanager.updateOne('student', {_id: databasemanager.ObjectId(studentId)}, req.body, (err, doc)=> {
         res.setHeader('Content-Type', 'text/html;charset=utf8')
         //console.log(doc)
         if (doc === null) {
@@ -103,7 +103,7 @@ exports.deleteStudent = (req, res)=> {
     var studentId = req.params.studentId
 
     var result = {code: 1, message: "删除成功"}
-    databasemanager.deleteOne('studentlist', {_id: databasemanager.ObjectId(studentId)}, (err, doc)=> {
+    databasemanager.deleteOne('student', {_id: databasemanager.ObjectId(studentId)}, (err, doc)=> {
         if (doc === null) {
             result.code === 0
             result.message = "删除失败"

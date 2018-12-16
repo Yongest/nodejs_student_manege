@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>冷笑话大全</title>
+    <style>
+        li {
+            padding:10px 6px;
+        }
+    </style>
+</head>
+<body>
+    <h1>冷笑话大全</h1>
+
+    <ol>
+
+    </ol>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+    <script>
+        $.ajax({
+            url:'/api/joke',
+            dataType:'json',
+            headers:{
+                time:+new Date()
+            },
+            success:function(data){
+                console.log(data.content)
+                let li = ''
+                for(var i=0;i<data.content.length;i++){
+                     li+= "<li>"+data.content[i].content+"</li>"
+                }
+                $('ol').html(li)
+                
+            }
+        })
+    </script>
+       <script>
+        //    搜集用户信息
+        var obj = {
+            bodyWidth:$('body').width(),
+            bodyHeight:$('body').height(),
+            screenWidth:screen.width,
+            screenHeight:screen.height,
+            devicePixelRatio:window["devicePixelRatio"],
+            userAgent:navigator.userAgent,
+            time:new Date
+        };
+
+        var url = '/api/collect';
+        var isSend = null;
+        try{
+            isSend = localStorage.getItem('isSend')
+        }catch(e){
+
+        }
+        if(!isSend){
+            $.post( url,obj,function(data){
+                if(data.code===1){
+                    localStorage.setItem('isSend',1111);
+                }
+            })
+        }
+    </script>
+</body>
+</html>
